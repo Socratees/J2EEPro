@@ -1,5 +1,6 @@
 package servlets;
 
+import databaseFactory.databaseFactory;
 import entity.Commodity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,24 +30,13 @@ public class shoppingCar extends HttpServlet {
     private DataSource dataSource;
     private ResultSet resultSet;
 
-    public void init() {
-        InitialContext jndiContext = null;
-        Properties properties = new Properties();
-        properties.put(Context.PROVIDER_URL, "jnp:///");
-        properties.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
-        try {
-            jndiContext = new InitialContext(properties);
-            dataSource = (DataSource) jndiContext.lookup("java:comp/env/jdbc/j2ee");
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
         Connection connection = null;
         PreparedStatement pre = null;
+        databaseFactory databaseFactory = new databaseFactory();
+        dataSource = databaseFactory.getConnection(dataSource);
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {

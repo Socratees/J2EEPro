@@ -1,9 +1,13 @@
 package servlets;
 
+import Context.systemContext;
+import databaseFactory.databaseFactory;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.Properties;
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -23,24 +27,10 @@ public class loginPage extends HttpServlet {
     private DataSource dataSource;
     private ResultSet resultSet;
 
-    public void init() {
-        InitialContext jndiContext = null;
-        Properties properties = new Properties();
-        properties.put(Context.PROVIDER_URL, "jnp:///");
-        properties.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
-        try {
-            jndiContext = new InitialContext(properties);
-            dataSource = (DataSource) jndiContext.lookup("java:comp/env/jdbc/j2ee");
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         HttpSession session = req.getSession(false);
 //        String username = (String)session.getAttribute("username");
-        if (session != null && session.getAttribute("username") != null) {
+        if (session != null && session.getAttribute(systemContext.USERNAME) != null) {
             res.sendRedirect("/mainPage/user.jsp");
         } else {
             res.sendRedirect("/index.jsp");
@@ -50,27 +40,27 @@ public class loginPage extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String username = req.getParameter(systemContext.USERNAME);
+        String password = req.getParameter(systemContext.PASSWORD);
 
 
-        if(req.getParameter("visitor")!=null){
+        if(req.getParameter(systemContext.VISITOR)!=null){
             username = "visitor";
             password = "visitor";
         }
         ServletContext servletContext = getServletContext();
-        int userNum = Integer.parseInt((String) servletContext.getAttribute("userNum"));
-        int visitorNum = Integer.parseInt((String)servletContext.getAttribute("visitorNum")) ;
+        int userNum = Integer.parseInt((String) servletContext.getAttribute(systemContext.USERNUM));
+        int visitorNum = Integer.parseInt((String)servletContext.getAttribute(systemContext.VISITORNUM)) ;
 
         boolean isUser = isUser(username, password);
         if (isUser) {
-            System.out.println(req.getParameter("visitor"));
+//            System.out.println(req.getParameter(systemContext.VISITOR));
 
             session = req.getSession(true);
-            session.setAttribute("username", username);
-            req.setAttribute("username", username);
+            session.setAttribute(systemContext.USERNAME, username);
+            req.setAttribute(systemContext.USERNAME, username);
 
-            Cookie cookie = new Cookie("username", username);
+            Cookie cookie = new Cookie(systemContext.USERNAME, username);
             cookie.setMaxAge(Integer.MAX_VALUE);
             res.addCookie(cookie);
 
@@ -79,14 +69,14 @@ public class loginPage extends HttpServlet {
             } else {
                 userNum++;
             }
-            servletContext.setAttribute("userNum", Integer.toString(userNum));
-            servletContext.setAttribute("visitorNum", Integer.toString(visitorNum));
-            servletContext.setAttribute("totalNum", Integer.toString(userNum+visitorNum));
+            servletContext.setAttribute(systemContext.USERNUM, Integer.toString(userNum));
+            servletContext.setAttribute(systemContext.VISITORNUM, Integer.toString(visitorNum));
+            servletContext.setAttribute(systemContext.TOTALNUM, Integer.toString(userNum+visitorNum));
 
-            session.setAttribute("userNum", Integer.toString(userNum));
-            session.setAttribute("visitorNum", Integer.toString(visitorNum));
-            session.setAttribute("totalNum", Integer.toString(userNum+visitorNum));
-            session.setAttribute("shoppingCar", "");
+            session.setAttribute(systemContext.USERNUM, Integer.toString(userNum));
+            session.setAttribute(systemContext.VISITORNUM, Integer.toString(visitorNum));
+            session.setAttribute(systemContext.TOTALNUM, Integer.toString(userNum+visitorNum));
+            session.setAttribute(systemContext.SHOPPINGCAR, "");
 
             res.sendRedirect(res.encodeRedirectURL("/mainPage/user.jsp"));
         } else {
@@ -98,6 +88,8 @@ public class loginPage extends HttpServlet {
         Connection connection = null;
         PreparedStatement pre = null;
 
+        databaseFactory databaseFactory = new databaseFactory();
+        dataSource = databaseFactory.getConnection(dataSource);
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {

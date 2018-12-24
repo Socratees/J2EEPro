@@ -1,6 +1,8 @@
 package webListener;
 
 import databaseFactory.databaseFactory;
+import Context.systemContext;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -19,27 +21,6 @@ public class loginListener implements ServletContextListener, ServletContextAttr
     private ResultSet resultSet;
     int userNum = 0;
     int visitorNum = 0;
-//    Connection connection = null;
-//    PreparedStatement pre = null;
-//    public void init() {
-//        InitialContext jndiContext = null;
-//        Properties properties = new Properties();
-//        properties.put(Context.PROVIDER_URL, "jnp:///");
-//        properties.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
-//        try {
-//            jndiContext = new InitialContext(properties);
-//            dataSource = (DataSource) jndiContext.lookup("java:comp/env/jdbc/j2ee");
-//        } catch (NamingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            connection = dataSource.getConnection();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
     @Override
     public void attributeAdded(ServletContextAttributeEvent scab) {
@@ -62,7 +43,7 @@ public class loginListener implements ServletContextListener, ServletContextAttr
         Connection connection = null;
         PreparedStatement pre = null;
         databaseFactory databaseFactory = new databaseFactory();
-        dataSource=databaseFactory.getConnection(dataSource);
+        dataSource = databaseFactory.getConnection(dataSource);
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {
@@ -81,31 +62,24 @@ public class loginListener implements ServletContextListener, ServletContextAttr
 
             connection.close();
             ServletContext servletContext = sce.getServletContext();
-            servletContext.setAttribute("userNum", Integer.toString(userNum));
-            servletContext.setAttribute("visitorNum", Integer.toString(visitorNum));
-            servletContext.setAttribute("totalNum", Integer.toString(userNum + visitorNum));
+            servletContext.setAttribute(systemContext.USERNUM, Integer.toString(userNum));
+            servletContext.setAttribute(systemContext.VISITORNUM, Integer.toString(visitorNum));
+            servletContext.setAttribute(systemContext.TOTALNUM, Integer.toString(userNum + visitorNum));
 //            servletContext.setAttribute("dataSource",dataSource);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    synchronized void addCounter(ServletContextAttributeEvent scae){
+    synchronized void addCounter(ServletContextAttributeEvent scae) {
         ServletContext servletContext = scae.getServletContext();
-        userNum = Integer.parseInt((String)servletContext.getAttribute("userNum")) ;
-        visitorNum = Integer.parseInt((String) servletContext.getAttribute("visitorNum")) ;
-//        Connection connection = null;
-//        PreparedStatement pre = null;
+        userNum = Integer.parseInt((String) servletContext.getAttribute(systemContext.USERNUM));
+        visitorNum = Integer.parseInt((String) servletContext.getAttribute(systemContext.VISITORNUM));
 
-//        try {
-//            connection = dataSource.getConnection();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         Connection connection = null;
         PreparedStatement pre = null;
         databaseFactory databaseFactory = new databaseFactory();
-        dataSource=databaseFactory.getConnection(dataSource);
+        dataSource = databaseFactory.getConnection(dataSource);
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {
@@ -115,8 +89,8 @@ public class loginListener implements ServletContextListener, ServletContextAttr
         try {
             String sql = "update counter set userNum=?,visitorNum=? where counterId=1";
             pre = connection.prepareStatement(sql);
-            pre.setInt(1,userNum);
-            pre.setInt(2,visitorNum);
+            pre.setInt(1, userNum);
+            pre.setInt(2, visitorNum);
             int n = pre.executeUpdate();
             connection.close();
 //            servletContext .setAttribute("dataSource",dataSource);
@@ -127,7 +101,6 @@ public class loginListener implements ServletContextListener, ServletContextAttr
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-//        ServletContext servletContext = sce.getServletContext();
-//        servletContext.removeAttribute("dataSource");
+
     }
 }
