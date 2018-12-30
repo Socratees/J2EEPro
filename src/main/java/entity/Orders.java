@@ -4,7 +4,15 @@ public class Orders {
     private int orderId;
     private String username;
     private String commodityName;
+    private int commodityId;
     private double quantity;
+
+    public void setCommodityId(int commodityId){
+        this.commodityId = commodityId;
+    }
+    public int getCommodityId(){
+        return commodityId;
+    }
 
     public int getOrderId(){
         return orderId;

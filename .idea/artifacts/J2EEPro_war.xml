@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="J2EE.war">
       <element id="artifact" artifact-name="J2EEPro:war exploded" />
-      <element id="library" level="project" name="Maven: org.json:json:20180813" />
     </root>
   </artifact>
 </component>
