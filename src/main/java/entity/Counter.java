@@ -1,6 +1,9 @@
 package entity;
 
-public class Counter {
+import java.awt.*;
+import java.io.Serializable;
+
+public class Counter implements Serializable{
     private int userNum;
     private int visitorNum;
 

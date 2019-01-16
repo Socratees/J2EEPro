@@ -1,8 +1,10 @@
 package serviceImpl;
 
 import entity.Commodity;
-import factory.DaoFactory;
+//import factory.DaoFactory;
+import factory.EJBFactory;
 import factory.ServiceFactory;
+import javaBean.commodityBean;
 import service.CommodityService;
 
 import java.util.List;
@@ -14,6 +16,8 @@ public class CommodityServiceImpl implements CommodityService {
     }
     @Override
     public List<Commodity> getAllCommodity() {
-        return DaoFactory.getCommodityDao().findCommodity();
+//        return DaoFactory.getCommodityDao().findCommodity();
+        commodityBean myCommodity = (commodityBean) EJBFactory.getEJB("ejb:/ejb/commodityBean!dao.commodityDao");
+        return myCommodity.findCommodity();
     }
 }

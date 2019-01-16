@@ -1,6 +1,8 @@
 package entity;
 
-public class Orders {
+import java.io.Serializable;
+
+public class Orders implements Serializable{
     private int orderId;
     private String username;
     private String commodityName;

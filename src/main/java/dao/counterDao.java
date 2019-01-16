@@ -2,9 +2,12 @@ package dao;
 
 import entity.Counter;
 
+import javax.ejb.Remote;
+import java.io.Serializable;
 import java.util.List;
 
-public interface counterDao {
+@Remote
+public interface counterDao extends Serializable{
     public List<Counter> getCounter();
 
     public void saveCounter(Counter counter);

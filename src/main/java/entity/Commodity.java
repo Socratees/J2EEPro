@@ -1,6 +1,8 @@
 package entity;
 
-public class Commodity {
+import java.io.Serializable;
+
+public class Commodity implements Serializable{
     private int commodityId;
     private String commodityName;
     private double price;

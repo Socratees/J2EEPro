@@ -2,12 +2,14 @@ package Controller;
 
 import Context.systemContext;
 import entity.User;
+import factory.EJBFactory;
 import factory.ServiceFactory;
 
 import java.io.IOException;
 import java.sql.*;
 
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,6 +56,7 @@ public class loginPage extends HttpServlet {
         user.setPassword(password);
 //        boolean isUser = isUser(username, password);
         boolean isUser = ServiceFactory.getUserService().isUser(user);
+//        boolean isUser = EJBFactory.getEJB("unnamed/userBean!dao.userDao");
         if (isUser) {
 //            System.out.println(req.getParameter(systemContext.VISITOR));
 

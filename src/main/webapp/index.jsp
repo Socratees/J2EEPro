@@ -36,8 +36,11 @@
     <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.js"></script>
     <%--<script src="assets/js/jquery.min.js"></script>--%>
     <script src="assets/js/amazeui.min.js"></script>
+
+
 </head>
 <body>
+
 
 <div>
     <%
@@ -138,6 +141,8 @@
 
         </div>
     </div>
+
+
 </div>
 <script>
     function viewAsVisitor() {
@@ -158,6 +163,8 @@
         });
     }
 </script>
+
+
 
 <%--<div style="position: fixed;left: 500px;top:50px;">--%>
 <%--<%--%>
