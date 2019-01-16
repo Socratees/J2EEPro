@@ -1,6 +1,7 @@
 package serviceImpl;
 
 import entity.Counter;
+import entity.CounterEntity;
 import factory.DaoFactory;
 import service.CounterService;
 
@@ -14,12 +15,12 @@ public class CounterServiceImpl implements CounterService{
     }
 
     @Override
-    public List<Counter> getCounterNum() {
+    public List<CounterEntity> getCounterNum() {
         return DaoFactory.getCounterDao().getCounter();
     }
 
     @Override
-    public void addCounterNum(Counter counter) {
+    public void addCounterNum(CounterEntity counter) {
         DaoFactory.getCounterDao().saveCounter(counter);
     }
 }

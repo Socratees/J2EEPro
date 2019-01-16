@@ -1,11 +1,12 @@
 package service;
 
 import entity.Counter;
+import entity.CounterEntity;
 
 import java.util.List;
 
 public interface CounterService {
-    public List<Counter> getCounterNum();
+    public List<CounterEntity> getCounterNum();
 
-    public void addCounterNum(Counter counter);
+    public void addCounterNum(CounterEntity counter);
 }

@@ -1,5 +1,6 @@
 package Controller;
 import entity.Commodity;
+import entity.CommodityEntity;
 import factory.ServiceFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +26,7 @@ public class getCommodity extends HttpServlet{
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 
         res.setContentType("application/json; charset=utf-8");//返回jsonArray前需设置contentType
-        List<Commodity> commodityList = ServiceFactory.getCommodityService().getAllCommodity();
+        List<CommodityEntity> commodityList = ServiceFactory.getCommodityService().getAllCommodity();
         JSONArray array = new JSONArray();
         for(int i=0;i<commodityList.size();i++){
             JSONObject object = new JSONObject(commodityList.get(i));

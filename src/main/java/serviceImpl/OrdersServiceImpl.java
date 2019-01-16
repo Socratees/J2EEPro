@@ -1,6 +1,7 @@
 package serviceImpl;
 
 import entity.Orders;
+import entity.OrdersEntity;
 import factory.DaoFactory;
 import service.OrdersService;
 
@@ -12,7 +13,7 @@ public class OrdersServiceImpl implements OrdersService {
         return ordersService;
     }
     @Override
-    public void addOrders(List<Orders> orders) {
+    public void addOrders(List<OrdersEntity> orders) {
         DaoFactory.getOrdersDao().saveOrders(orders);
     }
 }

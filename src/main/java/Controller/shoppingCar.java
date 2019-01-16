@@ -1,6 +1,7 @@
 package Controller;
 
 import entity.Orders;
+import entity.OrdersEntity;
 import factory.ServiceFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,10 +47,10 @@ public class shoppingCar extends HttpServlet {
         HttpSession session = req.getSession(false);
         session.setAttribute("shoppingCar", shoppingCar);
         String username = (String) session.getAttribute("username");
-        List<Orders> ordersList = new ArrayList<>();
+        List<OrdersEntity> ordersList = new ArrayList<>();
         double price = 0;
         for (int i = 0; i < array.length(); i++) {
-            Orders orders = new Orders();
+            OrdersEntity orders = new OrdersEntity();
             JSONObject object = (JSONObject) array.get(i);
             price += object.getDouble("price") * object.getDouble("quantity");
             orders.setUsername(username);

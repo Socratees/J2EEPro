@@ -3,6 +3,7 @@ package webListener;
 import databaseFactory.databaseFactory;
 import Context.systemContext;
 import entity.Counter;
+import entity.CounterEntity;
 import factory.ServiceFactory;
 import service.CounterService;
 
@@ -44,10 +45,10 @@ public class loginListener implements ServletContextListener, ServletContextAttr
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        List<Counter> counterList = new ArrayList<>();
+        List<CounterEntity> counterList = new ArrayList<>();
         counterList = ServiceFactory.getCounterService().getCounterNum();
         if(counterList.size()>0){
-            Counter counter = counterList.get(0);
+            CounterEntity counter = counterList.get(0);
             ServletContext servletContext = sce.getServletContext();
             servletContext.setAttribute(systemContext.USERNUM, Integer.toString(counter.getUserNum()));
             servletContext.setAttribute(systemContext.VISITORNUM, Integer.toString(counter.getVisitorNum()));
@@ -86,7 +87,7 @@ public class loginListener implements ServletContextListener, ServletContextAttr
 
     synchronized void addCounter(ServletContextAttributeEvent scae) {
         ServletContext servletContext = scae.getServletContext();
-        Counter counter = new Counter();
+        CounterEntity counter = new CounterEntity();
         userNum = Integer.parseInt((String) servletContext.getAttribute(systemContext.USERNUM));
         visitorNum = Integer.parseInt((String) servletContext.getAttribute(systemContext.VISITORNUM));
         counter.setUserNum(userNum);

@@ -1,6 +1,7 @@
 package serviceImpl;
 
 import entity.Commodity;
+import entity.CommodityEntity;
 import factory.DaoFactory;
 import factory.ServiceFactory;
 import service.CommodityService;
@@ -13,7 +14,7 @@ public class CommodityServiceImpl implements CommodityService {
         return commodityService;
     }
     @Override
-    public List<Commodity> getAllCommodity() {
+    public List<CommodityEntity> getAllCommodity() {
         return DaoFactory.getCommodityDao().findCommodity();
     }
 }

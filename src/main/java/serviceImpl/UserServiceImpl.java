@@ -1,6 +1,7 @@
 package serviceImpl;
 
 import entity.User;
+import entity.UserEntity;
 import factory.DaoFactory;
 import service.UserService;
 
@@ -12,8 +13,8 @@ public class UserServiceImpl implements UserService {
         return userService;
     }
     @Override
-    public boolean isUser(User user) {
-        List<User> userList = DaoFactory.getUserDao().findUser(user);
+    public boolean isUser(UserEntity user) {
+        List<UserEntity> userList = DaoFactory.getUserDao().findUser(user);
         return (userList != null);
     }
 }

@@ -1,11 +1,12 @@
 package dao;
 
 import entity.Counter;
+import entity.CounterEntity;
 
 import java.util.List;
 
 public interface counterDao {
-    public List<Counter> getCounter();
+    public List<CounterEntity> getCounter();
 
-    public void saveCounter(Counter counter);
+    public void saveCounter(CounterEntity counter);
 }

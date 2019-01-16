@@ -2,6 +2,7 @@ package Controller;
 
 import Context.systemContext;
 import entity.User;
+import entity.UserEntity;
 import factory.ServiceFactory;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class loginPage extends HttpServlet {
         int visitorNum = Integer.parseInt((String)servletContext.getAttribute(systemContext.VISITORNUM)) ;
 
 
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUsername(username);
         user.setPassword(password);
 //        boolean isUser = isUser(username, password);

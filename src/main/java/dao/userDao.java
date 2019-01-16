@@ -1,13 +1,14 @@
 package dao;
 
 import entity.User;
+import entity.UserEntity;
 
 import java.util.List;
 
 public interface userDao {
-    public List<User> findUser(User user);
+    public List<UserEntity> findUser(UserEntity user);
 
-    public void saveUser(User user);
+    public void saveUser(UserEntity user);
 
-    public void deleteUser(User user);
+    public void deleteUser(UserEntity user);
 }

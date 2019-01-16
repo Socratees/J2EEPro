@@ -1,9 +1,10 @@
 package service;
 
 import entity.Commodity;
+import entity.CommodityEntity;
 
 import java.util.List;
 
 public interface CommodityService {
-    public List<Commodity> getAllCommodity();
+    public List<CommodityEntity> getAllCommodity();
 }
